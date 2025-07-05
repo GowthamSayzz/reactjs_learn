@@ -1,36 +1,68 @@
 import { useState } from "react";
 import { validateEmail } from "../Utils/utils.js";
+import axios from "axios";
 
 function Login() {
-    // eslint-disable-next-line
-    var [email, setEmail] = useState(""); // eslint-disable-next-line
+    var [email, setEmail] = useState(""); 
     var [pword, setPword] = useState("");
 
     var [emailError, setEmailError] = useState("");
     var [pwordError, setPwordError] = useState("");
 
+    var [apiErrormsg, setAPIErrorMsg] = useState("");
+    var [apiSuccessMsg, setAPISuccessMsg] = useState("");
 
-    function handleEmail(emailData){
-        setEmail = emailData.target.value;
+    function handleEmail(emailData) {
+        setEmail(emailData.target.value);
     }
 
-    function handlePassword(passwordData){
-        setPword = passwordData.target.value;
+    function handlePassword(passwordData) {
+        setPword(passwordData.target.value);
     }
 
-    function handleLogin(){
-        if(validateEmail(email)){
+    async function handleLogin() {
+        var noOfErrors = 0;
+        if (validateEmail(email)) {
             setEmailError("");
-        }else{
-            setEmailError("Email is invalid");
+        } else {
+            setEmailError("Email is not valid");
+            noOfErrors++;
+            console.log("Validating email:", email, validateEmail(email));
         }
-        if(pword.length>=8){
+        if (pword.length >= 3) {
             setPwordError("");
-        }else{
+        } else {
             setPwordError("Password requires minimum 8 characters");
+            noOfErrors++;
+        }
+
+        if (noOfErrors === 0) {
+            var apiLoginData = {
+                'email': email, 'password': pword
+            }
+            //debugger;
+            var apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
+            console.log(apiLoginResponse.data.message);
+            if(apiLoginResponse.data.message === 'OK'){
+                setAPISuccessMsg("User Login Success");
+                setAPIErrorMsg("");
+            }else{
+                setAPIErrorMsg("User Login Failed");
+                setAPISuccessMsg("");
+            }
         }
     }
 
+    async function getAllUsers(){
+        var response = await axios.get('https://fakestoreapi.com/users');
+        console.log((response.data));
+    }
+
+    async function getSingleUser(){
+        var id = 10;
+        var response = axios.get('https://fakestoreapi.com/users/' + id);
+        console.log((await response).data.address.city);
+    }
 
 
 
@@ -39,17 +71,26 @@ function Login() {
             <h3 className="text-success text-center mt-3">Login Page</h3>
             <form className="m-2 p-3">
                 <div className="mb-3">
-                    <label className="form-label">Email</label>
-                    <input type="text" className="form-control" onChange={emailData => handleEmail(emailData)} placeholder="Email"></input>
+                    <label className="form-label" name="email-label">Email</label>
+                    <input type="text" className="form-control" name="email" onChange={emailData => handleEmail(emailData)} placeholder="Email" />
                     <div className="text-danger">{emailError}</div>
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Password</label>
-                    <input type="password" className="form-control" onChange={passwordData => handlePassword(passwordData)} placeholder="Password"></input>
+                    <label className="form-label" name="password-label">Password</label>
+                    <input type="password" className="form-control" name="password" onChange={passwordData => handlePassword(passwordData)} placeholder="Password" />
                     <div className="text-danger">{pwordError}</div>
                 </div>
                 <div className="mb-3">
-                    <button className="btn btn-danger" onClick={loginData => handleLogin(loginData)}>Login</button>
+                    <button type="button" className="btn btn-danger" onClick={e => handleLogin()}>Login</button>
+                </div>
+                <div className="mb-3">
+                    <button type="button" className="btn btn-warning" onClick={e => getAllUsers()}>Get All Users</button>
+                </div>
+                <div className="mb-3">
+                    <button type="button" className="btn btn-success" onClick={e => getSingleUser()}>Get Single User</button>
+                </div>
+                <div className="mb-3 ps-0 alert">
+                    {apiErrormsg} {apiSuccessMsg}
                 </div>
                 <div className="mb-3">
                     <a href='/forgot-password'>Forgot Password</a>

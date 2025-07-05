@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { validateEmail } from "../Utils/utils";
+import axios from "axios";
 
 function Signup() {
     var [name, setName] = useState("");
@@ -22,7 +23,7 @@ function Signup() {
         setPassword(pwordInput.target.value);
     }
 
-    function handleSignup() {
+    async function handleSignup() {
         var noOfErrors = 0;
         if (name.length <= 3) {
             setNameError("Name is too short");
@@ -38,20 +39,19 @@ function Signup() {
             noOfErrors++;
             console.log("Validating email:", email, validateEmail(email));
         }
-        if (password.length < 7) {
+        if (password.length < 3) {
             setpwordError("Password Length Must Be 8 Characters");
             noOfErrors++;
         } else {
             setpwordError("");
         }
 
-
         if (noOfErrors === 0) {
-            console.log("Account Created Successfully");
-            var apiSignUpData = {
-                'email': email, 'name': name, 'pword': password
+            var apisignupData = {
+                'email': email, 'password': password, 'name': name, 'mobile': 9123456780
             }
-            console.log(apiSignUpData);
+            var apiSignupResponse = await axios.post('https://api.softwareschool.co/auth/signup', apisignupData);
+            console.log(apiSignupResponse);
         }
         else {
             console.log("Details are not valid");
@@ -78,7 +78,7 @@ function Signup() {
                     <div className="text-danger">{pwordError}</div>
                 </div>
                 <div className="mb-3">
-                    <button className="btn btn-success" onClick={e => handleSignup()}>Create Account</button>
+                    <button type="button" className="btn btn-success" onClick={e => handleSignup()}>Create Account</button>
                 </div>
                 <div className="mb-3">
                     <a href='/login'>Login</a>
@@ -86,17 +86,6 @@ function Signup() {
                 <div className="mb-3">
                     <a href='/'>Home</a>
                 </div>
-                {
-                    name
-                }
-                <br />
-                {
-                    email
-                }
-                <br />
-                {
-                    password
-                }
             </form>
         </div>
     );
