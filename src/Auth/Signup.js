@@ -28,12 +28,11 @@ function Signup() {
             setNameError("Name is too short");
             noOfErrors++;
         } else {
-            //setNameError("");
+            setNameError("");
         }
 
         if (validateEmail(email)) {
-            debugger; // You'll hit this if email is valid
-            // setEmailError(""); // optionally clear error
+            setEmailError("");
         } else {
             setEmailError("Email is not valid");
             noOfErrors++;
@@ -43,7 +42,7 @@ function Signup() {
             setpwordError("Password Length Must Be 8 Characters");
             noOfErrors++;
         } else {
-            //setpwordError("");
+            setpwordError("");
         }
 
 
