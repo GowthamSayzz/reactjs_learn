@@ -1,0 +1,106 @@
+import { useState } from "react";
+import { validateEmail } from "../Utils/utils";
+
+function Signup() {
+    var [name, setName] = useState("");
+    var [email, setEmail] = useState("");
+    var [password, setPassword] = useState("");
+
+    var [nameError, setNameError] = useState("");
+    var [emailError, setEmailError] = useState("");
+    var [pwordError, setpwordError] = useState("");
+
+    function handleName(nameInput) {
+        setName(nameInput.target.value);
+    }
+
+    function handleEmail(emailInput) {
+        setEmail(emailInput.target.value);
+    }
+
+    function handlePassword(pwordInput) {
+        setPassword(pwordInput.target.value);
+    }
+
+    function handleSignup() {
+        var noOfErrors = 0;
+        if (name.length <= 3) {
+            setNameError("Name is too short");
+            noOfErrors++;
+        } else {
+            //setNameError("");
+        }
+
+        if (validateEmail(email)) {
+            debugger; // You'll hit this if email is valid
+            // setEmailError(""); // optionally clear error
+        } else {
+            setEmailError("Email is not valid");
+            noOfErrors++;
+            console.log("Validating email:", email, validateEmail(email));
+        }
+        if (password.length < 7) {
+            setpwordError("Password Length Must Be 8 Characters");
+            noOfErrors++;
+        } else {
+            //setpwordError("");
+        }
+
+
+        if (noOfErrors === 0) {
+            console.log("Account Created Successfully");
+            var apiSignUpData = {
+                'email': email, 'name': name, 'pword': password
+            }
+            console.log(apiSignUpData);
+        }
+        else {
+            console.log("Details are not valid");
+        }
+    }
+
+    return (
+        <div className="container">
+            <h3 className="text-success text-center mt-3">Create Account</h3>
+            <form className="m-2 p-3">
+                <div className="mb-3">
+                    <label className="form-label">Name</label>
+                    <input type="text" onChange={nameInput => handleName(nameInput)} className="form-control" placeholder="Name"></input>
+                    <div className="text-danger">{nameError}</div>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Email</label>
+                    <input type="text" onChange={emailInput => handleEmail(emailInput)} className="form-control" placeholder="Email"></input>
+                    <div className="text-danger">{emailError}</div>
+                </div>
+                <div className="mb-3">
+                    <label className="form-label">Password</label>
+                    <input type="password" onChange={pwordInput => handlePassword(pwordInput)} className="form-control" placeholder="Password"></input>
+                    <div className="text-danger">{pwordError}</div>
+                </div>
+                <div className="mb-3">
+                    <button className="btn btn-success" onClick={e => handleSignup()}>Create Account</button>
+                </div>
+                <div className="mb-3">
+                    <a href='/login'>Login</a>
+                </div>
+                <div className="mb-3">
+                    <a href='/'>Home</a>
+                </div>
+                {
+                    name
+                }
+                <br />
+                {
+                    email
+                }
+                <br />
+                {
+                    password
+                }
+            </form>
+        </div>
+    );
+}
+
+export default Signup;
