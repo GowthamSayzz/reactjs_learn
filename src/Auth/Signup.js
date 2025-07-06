@@ -11,6 +11,9 @@ function Signup() {
     var [emailError, setEmailError] = useState("");
     var [pwordError, setpwordError] = useState("");
 
+    var [apiErrormsg, setAPIErrorMsg] = useState("");
+    var [apiSuccessMsg, setAPISuccessMsg] = useState("");
+
     function handleName(nameInput) {
         setName(nameInput.target.value);
     }
@@ -47,17 +50,24 @@ function Signup() {
         }
 
         if (noOfErrors === 0) {
-            var apisignupData = {
-                'email': email, 'password': password, 'name': name, 'mobile': 9123456780
+            try {
+                var apisignupData = {
+                    'email': email, 'password': password, 'name': name, 'mobile': 9123456780
+                }
+                var apiSignupResponse = await axios.post('https://api.softwareschool.co/auth/signup', apisignupData);
+                if (apiSignupResponse.data.result === 'SUCCESS') {
+                    setAPISuccessMsg(apiSignupResponse.data.message);
+                    setAPIErrorMsg("");
+                    console.log(apiSignupResponse.data.data.userId);
+                } else {
+                    setAPIErrorMsg(apiSignupResponse.data.message);
+                    setAPISuccessMsg("");
+                }
+            } catch (error) {
+                console.log(error.message);
             }
-            var apiSignupResponse = await axios.post('https://api.softwareschool.co/auth/signup', apisignupData);
-            console.log(apiSignupResponse);
-        }
-        else {
-            console.log("Details are not valid");
         }
     }
-
     return (
         <div className="container">
             <h3 className="text-success text-center mt-3">Create Account</h3>
@@ -79,6 +89,9 @@ function Signup() {
                 </div>
                 <div className="mb-3">
                     <button type="button" className="btn btn-success" onClick={e => handleSignup()}>Create Account</button>
+                </div>
+                <div className="mb-3">
+                    {apiErrormsg} {apiSuccessMsg}
                 </div>
                 <div className="mb-3">
                     <a href='/login'>Login</a>

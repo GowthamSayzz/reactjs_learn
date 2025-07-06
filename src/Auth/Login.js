@@ -3,7 +3,7 @@ import { validateEmail } from "../Utils/utils.js";
 import axios from "axios";
 
 function Login() {
-    var [email, setEmail] = useState(""); 
+    var [email, setEmail] = useState("");
     var [pword, setPword] = useState("");
 
     var [emailError, setEmailError] = useState("");
@@ -37,28 +37,35 @@ function Login() {
         }
 
         if (noOfErrors === 0) {
-            var apiLoginData = {
-                'email': email, 'password': pword
-            }
-            //debugger;
-            var apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
-            console.log(apiLoginResponse.data.message);
-            if(apiLoginResponse.data.message === 'OK'){
-                setAPISuccessMsg("User Login Success");
-                setAPIErrorMsg("");
-            }else{
-                setAPIErrorMsg("User Login Failed");
-                setAPISuccessMsg("");
+            try {
+                var apiLoginData = {
+                    'email': email, 'password': pword
+                }
+                var apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
+                console.log(apiLoginResponse.data.message);
+                if (apiLoginResponse.data.result === 'SUCCESS') {
+                    setAPISuccessMsg(apiLoginResponse.data.message);
+                    setAPIErrorMsg("");
+                    console.log(apiLoginResponse.data.data.userId);
+                    localStorage.setItem('userId', apiLoginResponse.data.data.userId);
+                    window.location = '/signup';
+                } else {
+                    setAPIErrorMsg(apiLoginResponse.data.message);
+                    setAPISuccessMsg("");
+                }
+
+            } catch (error) {
+                console.error(error.message);
             }
         }
     }
 
-    async function getAllUsers(){
+    async function getAllUsers() {
         var response = await axios.get('https://fakestoreapi.com/users');
         console.log((response.data));
     }
 
-    async function getSingleUser(){
+    async function getSingleUser() {
         var id = 10;
         var response = axios.get('https://fakestoreapi.com/users/' + id);
         console.log((await response).data.address.city);
