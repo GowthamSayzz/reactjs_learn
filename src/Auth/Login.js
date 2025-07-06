@@ -96,7 +96,7 @@ function Login() {
                 <div className="mb-3">
                     <button type="button" className="btn btn-success" onClick={e => getSingleUser()}>Get Single User</button>
                 </div>
-                <div className="mb-3 ps-0 alert">
+                <div className="mb-3 alert alert-secondary">
                     {apiErrormsg} {apiSuccessMsg}
                 </div>
                 <div className="mb-3">

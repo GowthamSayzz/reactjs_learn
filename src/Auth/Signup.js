@@ -90,7 +90,7 @@ function Signup() {
                 <div className="mb-3">
                     <button type="button" className="btn btn-success" onClick={e => handleSignup()}>Create Account</button>
                 </div>
-                <div className="mb-3">
+                <div className="mb-3 alert alert-info">
                     {apiErrormsg} {apiSuccessMsg}
                 </div>
                 <div className="mb-3">
