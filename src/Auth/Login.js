@@ -42,13 +42,10 @@ function Login() {
                     'email': email, 'password': pword
                 }
                 var apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
-                console.log(apiLoginResponse.data.message);
+                //console.log(apiLoginResponse.data.message);
                 if (apiLoginResponse.data.result === 'SUCCESS') {
                     setAPISuccessMsg(apiLoginResponse.data.message);
                     setAPIErrorMsg("");
-                    console.log(apiLoginResponse.data.data.userId);
-                    localStorage.setItem('userId', apiLoginResponse.data.data.userId);
-                    window.location = '/signup';
                 } else {
                     setAPIErrorMsg(apiLoginResponse.data.message);
                     setAPISuccessMsg("");
