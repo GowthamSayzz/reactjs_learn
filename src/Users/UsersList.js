@@ -29,31 +29,44 @@ function UsersList() {
         setUsers(tempData);
     }
 
-    function handleSorting(){
-        let tempData = users.sort((user1, user2)=>{
-            if(user1.firstName.toLowerCase() > user2.firstName.toLowerCase()){
+    function handleSorting() {
+        let tempData = users.sort((user1, user2) => {
+            if (user1.firstName.toLowerCase() > user2.firstName.toLowerCase()) {
                 return -1
-            }else{
+            } else {
                 return 1
             }
         })
         setUsers([...tempData])
-        let tempData1 = users.sort((user1, user2)=>{
-            if(user1.gender.toLowerCase() > user2.gender.toLowerCase()){
+        let tempData1 = users.sort((user1, user2) => {
+            if (user1.gender.toLowerCase() > user2.gender.toLowerCase()) {
                 return -1
-            }else{
+            } else {
                 return 1
             }
         })
         setUsers([...tempData1])
-        let tempData2 = users.sort((user1, user2)=>{
-            if(user1.email.toLowerCase() > user2.email.toLowerCase()){
+        let tempData2 = users.sort((user1, user2) => {
+            if (user1.email.toLowerCase() > user2.email.toLowerCase()) {
                 return -1
-            }else{
+            } else {
                 return 1
             }
         })
         setUsers([...tempData2])
+    }
+
+    async function handleDelete(user) {
+        let apiResponse = await axios.delete('https://dummyjson.com/users/' + user.id);
+        console.log(apiResponse);
+        let tempData = users.filter(tempUser => tempUser.id !== user.id)
+        setUsers([...tempData])
+    }
+
+    let [name, setName] = useState("");
+
+    async function handleEdit(user) {
+        setName(user.firstName + " " + user.lastName);
     }
 
     return (
@@ -62,10 +75,10 @@ function UsersList() {
                 <Header />
             </div>
             <div className="row mt-5 mb-5">
-                <div className="col-3">
+                <div className="col-5">
                     <input type="text" placeholder="Search by name :)" className="form-control" onChange={search => searchFilter(search)}></input>
                 </div>
-                <div className="col-12 mt-3">
+                <div className="col-8 mt-3">
 
                     {/* ###----- 1.1 Table Data Alligned & Displayed Using Map Functions -----### */}
 
@@ -76,10 +89,9 @@ function UsersList() {
                                 <th className="text-center" onClick={sorting => handleSorting()}>Name</th>
                                 <th className="text-center" onClick={sorting => handleSorting()}>Email</th>
                                 <th className="text-center" onClick={sorting => handleSorting()}>Gender</th>
-                                <th className="text-center">Birth Date</th>
                                 <th className="text-center">Age</th>
                                 <th className="text-center">Role</th>
-                                <th className="text-center">Bank Number</th>
+                                <th className="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,15 +102,26 @@ function UsersList() {
                                         <td className="text-center">{user.firstName} {user.lastName}</td>
                                         <td className="text-center">{user.email}</td>
                                         <td className="text-center">{user.gender}</td>
-                                        <td className="text-center">{user.birthDate}</td>
                                         <td className="text-center">{user.age}</td>
                                         <td className="text-center">{user.role.toUpperCase()}</td>
-                                        <td className="text-center">{user.bank.cardNumber}</td>
+                                        <td>
+                                            <button className="btn btn-primary m-2 bi bi-pencil" onClick={e => handleEdit(user)}></button>
+                                            <button className="btn btn-danger m-2 bi bi-trash" onClick={e => handleDelete(user)}></button>
+                                        </td>
                                     </tr>
                                 ))
                             }
                         </tbody>
                     </table>
+                </div>
+                <div className="col-4">
+                    <div className="mb-3">
+                        <label>Name</label>
+                        <input type="text" placeholder="Name" className="form-control" value={name} />
+                    </div>
+                    <div className="mb-3">
+                        <button className="btn btn-warning">Update</button>
+                    </div>
                 </div>
             </div>
             <div className="col-12">

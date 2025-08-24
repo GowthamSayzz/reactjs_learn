@@ -10,10 +10,11 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ForgotPassword from './Auth/ForgotPassword.js';
 import HomePage from './HomePage/Home.js';
 import List from './Courses/List.js';
-import ProductsList from './Products/Products.js';
 import ProfileUpdate from './Profile/ProfileUpdate.js';
 import Products from './ReadData/Products.js';
 import UsersList from './Users/UsersList.js';
+import ProductsList from './Products/ProductsLists.js';
+import PostsList from './Posts/PostsList.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -28,10 +29,11 @@ root.render(
         <Route path='/login' Component={Login} />
         <Route path='/signup' Component={Signup} />
         <Route path='/forgot-password' Component={ForgotPassword} />
+        <Route path='/profile-update' Component={ProfileUpdate} />
         <Route path='/products-list' Component={ProductsList} />
-        <Route path='/profile-update' Component={ProfileUpdate}/>
-        <Route path='/api-practice' Component={Products}/>
-        <Route path='/users' Component={UsersList}/>
+        <Route path='/api-practice' Component={Products} />
+        <Route path='/users' Component={UsersList} />
+        <Route path='/post' Component={PostsList} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

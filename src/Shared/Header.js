@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Logo from './Logo.png';
 
 function Header(){
     var [navClassList, setNavClassList] = useState("collapse navbar-collapse");
@@ -15,10 +16,10 @@ function Header(){
     }
 
     return (
-        <nav className="navbar shadow mt-3 navbar-expand-lg">
+        <nav className="navbar shadow mt-3 navbar-expand-lg rounded-3">
             <div className="container">
                 <a className="navbar-brand" href="/">
-                    <img src="https://www.softwareschool.co/static/media/tl6.2441b21d3acc37b35ce6.png" width="120px" alt="logo"></img>
+                    <img src = {Logo} width="90px" alt="logo"></img>
                 </a>
                 <button className="navbar-toggler" onClick={e => handleNavToggle() }>
                     <span className="navbar-toggler-icon"></span>
@@ -31,6 +32,7 @@ function Header(){
                         <li className="nav-item"><a href="/profile-update" className="nav-link">Profile</a></li>
                         <li className="nav-item"><a href="/api-practice" className="nav-link">API Products</a></li>
                         <li className="nav-item"><a href="/users" className="nav-link">Users</a></li>
+                        <li className="nav-item"><a href="/post" className="nav-link">Posts</a></li>
                         <li className="nav-item"><a href="/login" className="nav-link">Login</a></li>
                         <li className="nav-item"><a href="/signup" className="nav-link">Sign Up</a></li>
                     </ul>
