@@ -38,21 +38,25 @@ function Login() {
 
         if (noOfErrors === 0) {
             try {
-                var apiLoginData = {
-                    'email': email, 'password': pword
+                const apiLoginData = {
+                    email: email, password: pword
                 }
-                var apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
-                //console.log(apiLoginResponse.data.message);
-                if (apiLoginResponse.data.result === 'SUCCESS') {
-                    setAPISuccessMsg(apiLoginResponse.data.message);
+                const apiLoginResponse = await axios.post('https://api.softwareschool.co/auth/login', apiLoginData);
+                if (apiLoginResponse.data.result === "SUCCESS") {
+                    console.log(apiLoginResponse);
+                    setAPISuccessMsg("Login Success");
                     setAPIErrorMsg("");
+                    localStorage.setItem("token", apiLoginResponse.data.data.token);
+                    localStorage.setItem("userId", apiLoginResponse.data.data.userId);
                 } else {
-                    setAPIErrorMsg(apiLoginResponse.data.message);
+                    setAPIErrorMsg("Login Details Incorrect");
                     setAPISuccessMsg("");
                 }
 
             } catch (error) {
-                console.error(error.message);
+                console.error(error.response?.data || error.message);
+                setAPIErrorMsg("Login failed");
+                setAPISuccessMsg("");
             }
         }
     }
@@ -93,9 +97,11 @@ function Login() {
                 <div className="mb-3">
                     <button type="button" className="btn btn-success" onClick={e => getSingleUser()}>Get Single User</button>
                 </div>
-                <div className="mb-3 alert alert-secondary">
-                    {apiErrormsg} {apiSuccessMsg}
-                </div>
+                {(apiErrormsg || apiSuccessMsg) && (
+                    <div className={`mb-3 alert ${apiErrormsg ? 'alert-danger' : 'alert-success'}`}>
+                        {apiErrormsg || apiSuccessMsg}
+                    </div>
+                )}
                 <div className="mb-3">
                     <a href='/forgot-password'>Forgot Password</a>
                 </div>
