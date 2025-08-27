@@ -28,11 +28,13 @@ function Header(){
                     <ul className="navbar-nav">
                         <li className="nav-item"><a href="/" className="nav-link">Home</a></li>
                         <li className="nav-item"><a href="/list"  className="nav-link">Courses</a></li>
+                        <li className="nav-item"><a href="/icons"  className="nav-link">Icons</a></li>
                         <li className="nav-item"><a href="/products-list"  className="nav-link">Products</a></li>
                         <li className="nav-item"><a href="/profile-update" className="nav-link">Profile</a></li>
                         <li className="nav-item"><a href="/api-practice" className="nav-link">API Products</a></li>
                         <li className="nav-item"><a href="/users" className="nav-link">Users</a></li>
                         <li className="nav-item"><a href="/post" className="nav-link">Posts</a></li>
+                        <li className="nav-item"><a href="/layout" className="nav-link">Responsive</a></li>
                         <li className="nav-item"><a href="/login" className="nav-link">Login</a></li>
                         <li className="nav-item"><a href="/signup" className="nav-link">Sign Up</a></li>
                     </ul>

@@ -15,6 +15,8 @@ import Products from './ReadData/Products.js';
 import UsersList from './Users/UsersList.js';
 import ProductsList from './Products/ProductsLists.js';
 import PostsList from './Posts/PostsList.js';
+import Icons from './Icons.js';
+import Layout from './Layout.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -34,6 +36,8 @@ root.render(
         <Route path='/api-practice' Component={Products} />
         <Route path='/users' Component={UsersList} />
         <Route path='/post' Component={PostsList} />
+        <Route path='/icons' Component={Icons} />
+        <Route path='/layout' Component={Layout} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
