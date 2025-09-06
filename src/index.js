@@ -17,10 +17,13 @@ import ProductsList from './Products/ProductsLists.js';
 import PostsList from './Posts/PostsList.js';
 import Icons from './Icons.js';
 import Layout from './Layout.js';
+import DataTest from './DataTest.js';
+import {Provider} from 'react-redux';
+import store from './Store/store.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter future={{
       v7_startTransition: true,
       v7_relativeSplatPath: true
@@ -38,9 +41,10 @@ root.render(
         <Route path='/post' Component={PostsList} />
         <Route path='/icons' Component={Icons} />
         <Route path='/layout' Component={Layout} />
+        <Route path='/redux' Component={DataTest} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Logo from './Logo.png';
+import { useSelector } from "react-redux";
 
 function Header(){
     var [navClassList, setNavClassList] = useState("collapse navbar-collapse");
     var isNavShowing = false;
+
+    let counter = useSelector(state => state.counter);
 
     function handleNavToggle(){
         if(isNavShowing === false){
@@ -28,6 +31,7 @@ function Header(){
                     <ul className="navbar-nav">
                         <li className="nav-item"><a href="/" className="nav-link">Home</a></li>
                         <li className="nav-item"><a href="/list"  className="nav-link">Courses</a></li>
+                        <li className="nav-item"><a href="/redux"  className="nav-link">Redux {counter}</a></li>
                         <li className="nav-item"><a href="/icons"  className="nav-link">Icons</a></li>
                         <li className="nav-item"><a href="/products-list"  className="nav-link">Products</a></li>
                         <li className="nav-item"><a href="/profile-update" className="nav-link">Profile</a></li>

@@ -1,17 +1,24 @@
+import { useDispatch } from "react-redux";
+import { addItem, removeItem } from "../Store/cart";
+
 function Product({ product, updateCart, removeItemsinCart }) {
 
-    function handleAddtoCart(){
-        updateCart();
+    let cartDispatch = useDispatch();
+
+    function handleAddtoCart() {
+        //updateCart();
+        cartDispatch(addItem({product}));
     }
 
-    function handleRemoveCartItem(){
-        removeItemsinCart();
+    function handleRemoveCartItem() {
+        //removeItemsinCart();
+        cartDispatch(removeItem({product}));
     }
 
     return (
         <div className="col-3">
             <div className="card shadow">
-                <img src={product.thumbnail} className="card-img" />
+                <img src={product.thumbnail} className="card-img" alt="" />
                 <div className="card-body">
                     <h4>{product.title}</h4>
                     <p>{product.description}</p>

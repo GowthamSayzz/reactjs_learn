@@ -7,7 +7,7 @@ function Layout() {
             <div className="row">
                 <Header />
             </div>
-            <div className="row mt-t mb-5">
+            <div className="row mt-5 mb-5">
                 <div className="col-6 mt-5">
                     <h3>Login Form</h3>
                     <div className="mb-3">

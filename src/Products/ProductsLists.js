@@ -3,23 +3,40 @@ import Footer from "../Shared/Footer.js";
 import Header from "../Shared/Header.js";
 import axios from "axios";
 import Product from "./Product.js";
+import { useSelector } from "react-redux";
 
 function ProductsList() {
 
+    /**
+     * !Commented this working code to understand cart.js functionality in real time
+     */
     let [products, setProducts] = useState([]);
-    let [noOfCartItems, setNoOfcartItems] = useState(0);
+    // let [noOfCartItems, setNoOfcartItems] = useState(0);
+
+    // function updateCart() {
+    //     setNoOfcartItems(noOfCartItems + 1)
+    // }
+
+    // function removeItemsinCart(){
+    //     if(noOfCartItems <= 0){
+    //         alert("Items count is already 0");
+    //         return
+    //     }
+    //     setNoOfcartItems(noOfCartItems - 1);
+    // }
+
+
+    let noOfCartItems = useSelector(state => state.cartItems);
+    console.log('noofCartItems', noOfCartItems.length);
 
     function updateCart() {
-        setNoOfcartItems(noOfCartItems + 1)
+
     }
 
-    function removeItemsinCart(){
-        if(noOfCartItems <= 0){
-            alert("Items count is already 0");
-            return
-        }
-        setNoOfcartItems(noOfCartItems - 1);
+    function removeItemsinCart() {
+
     }
+
 
     useEffect(() => {
         async function getProductList() {
@@ -80,13 +97,13 @@ function ProductsList() {
                         </div>
                     ))
                 } */}
-                
+
                 <div className="col-12">
-                    <h4>Cart: {noOfCartItems} items</h4>
+                    <h4>Cart: {noOfCartItems.length} items</h4>
                 </div>
                 {
                     products.map(product => (
-                        <Product product={product} updateCart={updateCart} removeItemsinCart={removeItemsinCart} />
+                        <Product key={product.id} product={product} updateCart={updateCart} removeItemsinCart={removeItemsinCart} />
                     ))
                 }
             </div>
